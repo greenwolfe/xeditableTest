@@ -1,0 +1,63 @@
+Using wysihtml5 editor with x-editable-bootstrap produces the following bugs.
+The buttons for indent, outdent, ordered list, unordered list, link and insert image appear to be present, but they aren't rendered so are invisible.  indent, outdent, ordered list and unordered list appear to be functional if you can find the right place to click.  link and insert image appear not to be functional.  You click on the button and nothing happens.  I'm guessing a pop-up dialog is supposed to appear.
+
+When text color is added, the button shows, but the text color only shows up after saving the edits. It does not show up in th editor itself.
+
+
+to reproduce these bugs:
+
+meteor create xeditableTest 
+ [running version 1.0.3.2]
+cd xeditableTest
+meteor add natestrauser:x-editable-bootstrap
+meteor show natestrauser:x-editable-bootstrap
+  [Package: natestrauser:x-editable-bootstrap@1.5.2_2]
+meteor add twbs:bootstrap
+  [twbs:bootstrap  added, version 3.3.2]
+
+/xeditableTest.html
+
+<head>
+  <title>xeditable Test</title>
+</head>
+
+<body>
+  <h1>xeditable Test</h1>
+  {{>xedit}}
+</body>
+
+<template name="xedit">
+    <span id='textArea' class='editable' data-placeholder='Enter some text.' data-emptytext='Click to add text.' data-type='wysihtml5' data-mode='popup' data-showbuttons='top' data-placement='bottom'>hello</span>
+</template>
+
+/xeditableTest.js
+
+if (Meteor.isClient) {
+
+  Template.xedit.rendered = function () {
+    $('#textArea.editable').editable({
+      success: function(response,newValue) {
+        console.log(newValue);
+      },
+      wysihtml5: {
+        "color":true //,
+        //"lists":true,
+        //"link": true
+      }
+    });
+  }
+
+}
+
+According to the wysihtml5 documentation, default buttons should include links and lists
+
+https://github.com/jhollingworth/bootstrap-wysihtml5#options 
+$('#some-textarea').wysihtml5({
+  "font-styles": true, //Font styling, e.g. h1, h2, etc. Default true
+  "emphasis": true, //Italics, bold, etc. Default true
+  "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+  "html": false, //Button which allows you to edit the generated HTML. Default false
+  "link": true, //Button to insert a link. Default true
+  "image": true, //Button to insert an image. Default true,
+  "color": false //Button to change color of font  
+});
