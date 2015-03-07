@@ -1,3 +1,6 @@
+deployed example:  http://xeditabletest.meteor.com 
+meteorpad:  http://meteorpad.com/pad/9NBDLW2oJjPpQFA4H/xeditableTest 
+
 Using wysihtml5 editor with x-editable-bootstrap produces the following bugs.
 The buttons for indent, outdent, ordered list, unordered list, link and insert image appear to be present, but they aren't rendered so are invisible.  indent, outdent, ordered list and unordered list appear to be functional if you can find the right place to click.  link and insert image appear not to be functional.  You click on the button and nothing happens.  I'm guessing a pop-up dialog is supposed to appear.
 
